@@ -1,0 +1,22 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"  
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+//model < 테이블만들기 
+model board{
+  boardId Int @id @default(autoincrement()) @map("board_id")       //autoincre~ 자동으로 번호가 생기는거 (예시~ 1 2 3 이렇게)    , map을 쓰면 내가 설정한 이름으로 나옴
+  title String
+  description String
+  author String                            //String?이면 굳이 값을 안넣어도 null값이 들어가도된다.
+}
