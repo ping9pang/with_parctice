@@ -1,9 +1,11 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Query, UseGuards } from '@nestjs/common';
 import { BoardService } from './board.service';
 import { title } from 'process';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 
-@Controller("board")  //
+@Controller("board")
+@UseGuards(JwtAuthGuard)
 export class BoardController {
     constructor(private readonly boardservice: BoardService) { }
 

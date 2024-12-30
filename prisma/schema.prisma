@@ -20,3 +20,12 @@ model board{
   description String
   author String                            //String?이면 굳이 값을 안넣어도 null값이 들어가도된다.
 }
+
+model user{
+  userId Int @id @default(autoincrement()) @map("user_id")
+  id String @unique  //unique는 고유한  즉 고유하게 사용 느낌알잔아
+  password String
+  name String
+  email String @unique
+  phone String @unique
+}
