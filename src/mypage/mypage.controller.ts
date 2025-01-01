@@ -4,25 +4,24 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Request } from 'express';
 
 @Controller('mypage')
-@UseGuards(JwtAuthGuard) // 본인만 접근할 수 있도록 가드 적용
+@UseGuards(JwtAuthGuard) // 본인만 접근 적용
 export class MypageController {
-  constructor(private readonly mypageService: MypageService) {}
+  constructor(private readonly mypageService: MypageService) { }
 
-  // 사용자가 작성한 게시물 조회
+
   @Get('posts')
-  async getMyPosts(@Req() req: Request) {
-    const userId = req.user['userId']; // JWT에서 userId 추출
+  async getMyPosts(@Req() req) {    // 게시물 조회
+    const userId = req.user.id;
     return this.mypageService.getPosts(userId); // 작성한 게시물 조회
   }
 
-  // 사용자 정보 수정
   @Patch('update-info')
-  async updateUser(
+  async updateUser(    // 사용자 정보 수정
     @Body('userId') userId: number,
     @Body('name') name: string,
     @Body('email') email: string,
     @Body('phone') phone: string,
   ) {
-    return this.mypageService.updateUser(userId, name, email, phone); // 사용자 정보 수정
+    return this.mypageService.updateUser(userId, name, email, phone); // 정보 수정
   }
 }
