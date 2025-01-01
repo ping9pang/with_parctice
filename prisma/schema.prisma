@@ -14,18 +14,22 @@ datasource db {
 }
 
 //model < 테이블만들기 
-model board{
-  boardId Int @id @default(autoincrement()) @map("board_id")       //autoincre~ 자동으로 번호가 생기는거 (예시~ 1 2 3 이렇게)    , map을 쓰면 내가 설정한 이름으로 나옴
-  title String
+model board {
+  boardId     Int     @id @default(autoincrement()) @map("board_id")
+  title       String
   description String
-  author String                            //String?이면 굳이 값을 안넣어도 null값이 들어가도된다.
+  authorId    Int
+  author      user    @relation(fields: [authorId], references: [userId])  // userId와 연결
+  views       Int     @default(0)
+  likes       Int     @default(0)
 }
 
-model user{
-  userId Int @id @default(autoincrement()) @map("user_id")
-  id String @unique  //unique는 고유한  즉 고유하게 사용 느낌알잔아
-  password String
-  name String
-  email String @unique
-  phone String @unique
+model user {
+  userId    Int     @id @default(autoincrement()) @map("user_id")
+  id        String  @unique
+  password  String
+  name      String
+  email     String  @unique
+  phone     String  @unique
+  boards    board[] // user가 작성한 게시물들
 }
